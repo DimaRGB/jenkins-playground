@@ -1,0 +1,1 @@
+echo 'trusted file loaded'
