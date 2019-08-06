@@ -1,5 +1,10 @@
 pipeline {
   agent any
+
+  environment {
+    ENV = 'qa'
+  }
+
   stages {
     stage('First stage') {
       steps {
@@ -7,19 +12,18 @@ pipeline {
         dir(path: 'jenkins') {
           echo 'asd'
         }
-
-        cleanWs(cleanWhenSuccess: true, cleanupMatrixParent: true)
         load 'jenkins/lib.groovy'
         readTrusted 'jenkins/trusted.groovy'
-        deleteDir()
         script {
           echo 'arbitrary script'
         }
-
       }
     }
   }
-  environment {
-    ENV = 'qa'
+
+  post {
+    always {
+      cleanWs()
+    }
   }
 }
